@@ -5,9 +5,19 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 from rest_framework.authtoken.models import Token
 
+ROLE_CHOICES = (
+    ('Main Tank', u'Main Tank'),
+    ('Off Tank', u'Off Tank'),
+    ('Main DPS', u'Main DPS'),
+    ('Flex DPS', u'Flex DPS'),
+    ('Main Support', u'Main Support'),
+    ('Flex Support', u'Flex Support')
+)
+
 
 class Member(AbstractUser):
     ip_address = models.GenericIPAddressField(blank=True, null=True)
+    role = models.CharField(max_length=16, choices=ROLE_CHOICES, blank=False, null=False, default='CHange me')
     battle_tag = models.CharField(max_length=24, blank=False, null=False)
     twitter = models.CharField(max_length=50, blank=True, null=True)
     discord = models.CharField(max_length=50, blank=True, null=True)

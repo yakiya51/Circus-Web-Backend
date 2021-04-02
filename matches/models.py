@@ -19,6 +19,12 @@ MAP_CHOICES = (
     ('Junkertown', u'Junkertown'),
     ('Dorado', u'Dorado'),
 )
+STATE_CHOICES = (
+    ('drafting', u'drafting'),
+    ('map_vote', u'map_vote'),
+    ('playing', u'playing'),
+    ('completed', u'completed')
+)
 WIN_CHOICES = (('blue', u'blue'), ('red', u'red'))
 
 
@@ -30,6 +36,7 @@ class Match(models.Model):
     time_stamp = models.DateTimeField(auto_now_add=True)
     map = models.CharField(max_length=40, choices=MAP_CHOICES, null=True, blank=True)
     outcome = models.CharField(max_length=5, choices=WIN_CHOICES, null=True, blank=True)
+    state = models.CharField(max_length=15, choices=STATE_CHOICES, null=False, blank=False, default='drafting')
 
     def __str__(self):
         return f'{self.map} Blue({self.blue_captain.username}) Red({self.red_captain.username})'
