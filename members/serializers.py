@@ -9,7 +9,12 @@ class MemberSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Member
-        exclude = ('password', 'email', 'ip_address')
+        exclude = (
+            'password', 'email', 'ip_address',
+            'groups', 'user_permissions', 'is_staff',
+            'first_name', 'last_name', 'is_superuser',
+            'last_login', 'date_joined'
+        )
 
 
 class NewMemberSerializer(serializers.Serializer):

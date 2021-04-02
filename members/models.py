@@ -12,6 +12,17 @@ class Member(AbstractUser):
     twitter = models.CharField(max_length=50, blank=True, null=True)
     discord = models.CharField(max_length=50, blank=True, null=True)
 
+    def __str__(self):
+        if self.battle_tag is not None:
+            return self.battle_tag
+        elif len(self.battle_tag) <= 0:
+            return f'{self.id} No battletag set.'
+        else:
+            return f'{self.id} No battletag set.'
+
+    def natural_key(self):
+        return self.battle_tag
+
 
 @receiver(post_save, sender=settings.AUTH_USER_MODEL)
 def create_auth_token(sender, instance=None, created=False, **kwargs):
