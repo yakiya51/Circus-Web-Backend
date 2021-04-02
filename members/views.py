@@ -1,5 +1,6 @@
 from rest_framework import viewsets
 from rest_framework.authtoken.models import Token
+from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.decorators import action
 from rest_framework.response import Response
 
@@ -57,3 +58,14 @@ class MemberViewSet(viewsets.ModelViewSet):
     def coaches(self, request):
         queryset = Member.objects.filter(is_coach=True)
         return Response(MemberSerializer(instance=queryset, many=True).data)
+
+
+class AuthToken(ObtainAuthToken):
+
+    def post(self, request, *args, **kwargs):
+        serializer = self.serializer_class(data=request.data, context={'request': request})
+        if serializer.is_valid():
+
+            user = serializer.validated_data['user']
+            token, created = Token.objects.get_or_create(user=user)
+            return Response({'token': token.key})

@@ -11,20 +11,21 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
 from pathlib import Path
+from django.core.management import utils
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
+# Development
 SECRET_KEY = 'ix31_x$kg@-a@q-2c9l7kpw9zkrjcm+t4ij%vnklpr%rk*#r*d'
+# Production
+#SECRET_KEY = utils.get_random_secret_key()
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost', 'rankedcircus.com']
+AUTH_USER_MODEL = 'members.Member'
 
 
 # Application definition
@@ -36,9 +37,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework',
     'corsheaders',
-    'matches.app.MatchesConfig',
-    'members.app.MembersConfig'
+    'matches.apps.MatchesConfig',
+    'members.apps.MembersConfig'
 ]
 
 MIDDLEWARE = [
