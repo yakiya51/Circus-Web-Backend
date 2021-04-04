@@ -14,10 +14,15 @@ ROLE_CHOICES = (
     ('Flex Support', u'Flex Support')
 )
 
+class EntranceKey(models.Model):
+    code = models.CharField(max_length=50, blank=False, null=False)
+
+    def __str__(self):
+        return self.code
 
 class Member(AbstractUser):
     ip_address = models.GenericIPAddressField(blank=True, null=True)
-    role = models.CharField(max_length=16, choices=ROLE_CHOICES, blank=False, null=False, default='CHange me')
+    role = models.CharField(max_length=16, choices=ROLE_CHOICES, blank=False, null=False, default='Change me')
     battle_tag = models.CharField(max_length=24, blank=False, null=False)
     twitter = models.CharField(max_length=50, blank=True, null=True)
     discord = models.CharField(max_length=50, blank=True, null=True)

@@ -26,7 +26,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['localhost', 'rankedcircus.com']
 AUTH_USER_MODEL = 'members.Member'
-
+CORS_ORIGIN_ALLOW_ALL = True
 
 # Application definition
 

@@ -21,12 +21,12 @@ class NewMemberSerializer(serializers.Serializer):
     username = serializers.CharField(validators=[alpha_only])
     email = serializers.CharField()
     password = serializers.CharField()
-    captcha_key = serializers.CharField()
-    captcha_value = serializers.CharField()
+    battle_tag = serializers.CharField()
 
     def create(self, val_data):
         pass_word =val_data.pop('password', None)
         user_name = val_data.pop('username', None)
+        battletag = val_data.pop('battle_tag', None)
         mail = val_data.pop('email', None)
 
         does_exist = Member.objects.filter(username__iexact=user_name)
@@ -38,7 +38,7 @@ class NewMemberSerializer(serializers.Serializer):
             raise serializers.ValidationError('Please use a proper mailing address.')
             return
 
-        instance = Member(email=mail, username=user_name, country=ctry)
+        instance = Member(email=mail, username=user_name, battle_tag=battletag)
 
         if pass_word is not None:
             instance.set_password(pass_word)

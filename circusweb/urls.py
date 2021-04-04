@@ -3,6 +3,7 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 from rest_framework import routers
+from rest_framework.authtoken import views
 
 from matches.views import MatchViewSet
 from members.views import MemberViewSet, AuthToken
@@ -13,6 +14,7 @@ r.register(r'matches', MatchViewSet)
 
 urlpatterns = [
     path('api/', include(r.urls)),
+    path('api/api-token-auth/', views.obtain_auth_token, name='api-token-auth'),
     path('admin/', admin.site.urls),
     path('api-auth/', AuthToken.as_view()),
 ]

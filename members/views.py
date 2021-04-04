@@ -4,7 +4,7 @@ from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.decorators import action
 from rest_framework.response import Response
 
-from members.models import Member
+from members.models import Member, EntranceKey
 from members.serializers import MemberSerializer, NewMemberSerializer
 
 
@@ -29,17 +29,22 @@ class MemberViewSet(viewsets.ModelViewSet):
             _member.save()
 
         if self.action == 'create':
-            return NewMemberSerializer
+            if 'entrance_key' in self.request.data:
+                ek = EntranceKey.objects.filter(code=self.request.data.get('entrance_key'))
+                if len(ek) > 0:
+                    return NewMemberSerializer
+                else:
+                    return
         else:
             return MemberSerializer
 
     @action(detail=False, methods=['GET'])
     def sort(self, request):
-        ip = self.request.META.get('REMOTE_ADDR')
-        _member = Member.objects.get(id=self.request.user.id)
-        _member.ip_address = get_client_ip(self.request)
-        _member.save()
-        print(ip)
+        if self.request.user.is_authenticated:
+            ip = self.request.META.get('REMOTE_ADDR')
+            _member = Member.objects.get(id=self.request.user.id)
+            _member.ip_address = get_client_ip(self.request)
+            _member.save()
 
         queryset = None
 
