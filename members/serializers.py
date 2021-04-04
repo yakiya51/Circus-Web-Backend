@@ -7,6 +7,9 @@ alpha_only = RegexValidator('^[A-Za-z0-9_]+$', message='No unicode')
 
 class MemberSerializer(serializers.ModelSerializer):
 
+    def create(self, val_data):
+        pass
+
     class Meta:
         model = Member
         exclude = (

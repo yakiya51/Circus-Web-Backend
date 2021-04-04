@@ -34,7 +34,9 @@ class MemberViewSet(viewsets.ModelViewSet):
                 if len(ek) > 0:
                     return NewMemberSerializer
                 else:
-                    return
+                    return MemberSerializer
+            else:
+                return MemberSerializer
         else:
             return MemberSerializer
 
