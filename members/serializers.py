@@ -6,10 +6,6 @@ alpha_only = RegexValidator('^[A-Za-z0-9_]+$', message='No unicode')
 
 
 class MemberSerializer(serializers.ModelSerializer):
-
-    def create(self, val_data):
-        pass
-
     class Meta:
         model = Member
         exclude = (
@@ -25,11 +21,14 @@ class NewMemberSerializer(serializers.Serializer):
     email = serializers.CharField()
     password = serializers.CharField()
     battle_tag = serializers.CharField()
+    role = serializers.CharField()
 
+    # Warcrime function literal kony 2012~
     def create(self, val_data):
         pass_word =val_data.pop('password', None)
         user_name = val_data.pop('username', None)
         battletag = val_data.pop('battle_tag', None)
+        player_role = val_data.pop('role', None)
         mail = val_data.pop('email', None)
 
         does_exist = Member.objects.filter(username__iexact=user_name)
@@ -41,7 +40,7 @@ class NewMemberSerializer(serializers.Serializer):
             raise serializers.ValidationError('Please use a proper mailing address.')
             return
 
-        instance = Member(email=mail, username=user_name, battle_tag=battletag)
+        instance = Member(email=mail, username=user_name, battle_tag=battletag, role=player_role)
 
         if pass_word is not None:
             instance.set_password(pass_word)

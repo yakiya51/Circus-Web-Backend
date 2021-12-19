@@ -1,11 +1,13 @@
 from rest_framework import viewsets
 from rest_framework.authtoken.models import Token
 from rest_framework.authtoken.views import ObtainAuthToken
-from rest_framework.decorators import action
+from rest_framework.decorators import action, permission_classes
 from rest_framework.response import Response
 
 from members.models import Member, EntranceKey
 from members.serializers import MemberSerializer, NewMemberSerializer
+
+from permissions import IsOwnerOrReadOnlyMember
 
 
 def get_client_ip(request):
@@ -20,6 +22,7 @@ def get_client_ip(request):
 class MemberViewSet(viewsets.ModelViewSet):
     queryset = Member.objects.all()
     serializer_class = MemberSerializer
+    permission_classes = (IsOwnerOrReadOnlyMember,)
 
     def get_serializer_class(self):
         if self.request.user.is_authenticated:
@@ -29,14 +32,10 @@ class MemberViewSet(viewsets.ModelViewSet):
             _member.save()
 
         if self.action == 'create':
-            if 'entrance_key' in self.request.data:
-                ek = EntranceKey.objects.filter(code=self.request.data.get('entrance_key'))
-                if len(ek) > 0:
-                    return NewMemberSerializer
-                else:
-                    return MemberSerializer
-            else:
-                return MemberSerializer
+            # if 'entrance_key' in self.request.data:
+                # ek = EntranceKey.objects.filter(code=self.request.data.get('entrance_key'))
+                # if len(ek) > 0:
+            return NewMemberSerializer
         else:
             return MemberSerializer
 
@@ -59,11 +58,6 @@ class MemberViewSet(viewsets.ModelViewSet):
             queryset = Member.objects.filter(
                 username__contains=request.query_params.get('substr'))
 
-        return Response(MemberSerializer(instance=queryset, many=True).data)
-
-    @action(detail=False, methods=['GET'])
-    def coaches(self, request):
-        queryset = Member.objects.filter(is_coach=True)
         return Response(MemberSerializer(instance=queryset, many=True).data)
 
 

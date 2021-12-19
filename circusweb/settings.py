@@ -19,6 +19,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Development
 SECRET_KEY = 'ix31_x$kg@-a@q-2c9l7kpw9zkrjcm+t4ij%vnklpr%rk*#r*d'
 # Production
+# TODO: BEFORE PUSH PROD GET PROPER KEY, DO NOT SELECT RANDOM :O
 #SECRET_KEY = utils.get_random_secret_key()
 
 # SECURITY WARNING: don't run with debug turned on in production!
@@ -41,7 +42,8 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'corsheaders',
     'matches.apps.MatchesConfig',
-    'members.apps.MembersConfig'
+    'members.apps.MembersConfig',
+    'matchqueue.apps.MatchqueueConfig'
 ]
 
 MIDDLEWARE = [

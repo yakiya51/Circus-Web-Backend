@@ -1,16 +1,19 @@
 from itertools import chain
 
 from rest_framework import viewsets
-from rest_framework.decorators import action
+from rest_framework.decorators import action, permission_classes
 from rest_framework.response import Response
 
 from matches.models import Match
 from matches.serializers import MatchSerializer
 
+from permissions import IsAdminOrReadOnly
+
 
 class MatchViewSet(viewsets.ModelViewSet):
     queryset = Match.objects.all()
     serializer_class = MatchSerializer
+    permission_classes = (IsAdminOrReadOnly,)
 
     @action(detail=False, methods=['GET'])
     def sort(self, request):
