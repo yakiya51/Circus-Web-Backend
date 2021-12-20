@@ -23,7 +23,7 @@ class EntranceKey(models.Model):
 
 
 class Member(AbstractUser):
-    ip_address = models.GenericIPAddressField(blank=True, null=True)
+#    ip_address = models.GenericIPAddressField(blank=True, null=True)
     role = models.CharField(max_length=16, choices=ROLE_CHOICES,
                             blank=False, null=False, default='Change me')
     battle_tag = models.CharField(max_length=24, blank=False, null=False)

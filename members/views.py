@@ -4,19 +4,20 @@ from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.decorators import action, permission_classes
 from rest_framework.response import Response
 
-from members.models import Member, EntranceKey
+from members.models import Member
 from members.serializers import MemberSerializer, NewMemberSerializer
 
 from permissions import IsOwnerOrReadOnlyMember
 
 
 def get_client_ip(request):
-    x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
-    if x_forwarded_for:
-        ip = x_forwarded_for.split(',')[0]
-    else:
-        ip = request.META.get('REMOTE_ADDR')
-    return ip
+    return 'a'
+    # x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+    # if x_forwarded_for:
+    #     ip = x_forwarded_for.split(',')[0]
+    # else:
+    #     ip = request.META.get('REMOTE_ADDR')
+    # return ip
 
 
 class MemberViewSet(viewsets.ModelViewSet):
@@ -25,11 +26,11 @@ class MemberViewSet(viewsets.ModelViewSet):
     permission_classes = (IsOwnerOrReadOnlyMember,)
 
     def get_serializer_class(self):
-        if self.request.user.is_authenticated:
-            ip = self.request.META.get('REMOTE_ADDR')
-            _member = Member.objects.get(id=self.request.user.id)
-            _member.ip_address = get_client_ip(self.request)
-            _member.save()
+        # if self.request.user.is_authenticated:
+            # ip = self.request.META.get('REMOTE_ADDR')
+            # _member = Member.objects.get(id=self.request.user.id)
+            # _member.ip_address = get_client_ip(self.request)
+            # _member.save()
 
         if self.action == 'create':
             # if 'entrance_key' in self.request.data:

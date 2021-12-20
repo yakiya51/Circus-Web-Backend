@@ -25,7 +25,7 @@ SECRET_KEY = 'ix31_x$kg@-a@q-2c9l7kpw9zkrjcm+t4ij%vnklpr%rk*#r*d'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost', 'rankedcircus.com']
+ALLOWED_HOSTS = ['*', 'localhost', 'rankedcircus.com']
 AUTH_USER_MODEL = 'members.Member'
 CORS_ORIGIN_ALLOW_ALL = True
 
@@ -45,13 +45,18 @@ INSTALLED_APPS = [
     'members.apps.MembersConfig',
     'matchqueue.apps.MatchqueueConfig'
 ]
+# REST_FRAMEWORK = {
+#     'DEFAULT_AUTHENTICATION_CLASSES': [
+#         'rest_framework.authentication.TokenAuthentication',
+#     ]
+# }
 
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
+    'django.contrib.sessions.middleware.SessionMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
