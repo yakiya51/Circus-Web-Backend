@@ -43,7 +43,8 @@ INSTALLED_APPS = [
     'corsheaders',
     'matches.apps.MatchesConfig',
     'members.apps.MembersConfig',
-    'matchqueue.apps.MatchqueueConfig'
+    'matchqueue.apps.MatchqueueConfig',
+    'matchdraft.apps.MatchDraftConfig'
 ]
 # REST_FRAMEWORK = {
 #     'DEFAULT_AUTHENTICATION_CLASSES': [
